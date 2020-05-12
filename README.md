@@ -11,7 +11,8 @@ Crear el proyecto
     dotnet new classlib -n Application -f netcoreapp3.1
     dotnet new classlib -n AccessData -f netcoreapp3.1
 
-Agregar proyectos 
+Agregar proyectos
+
     dotnet sln add API/API.csproj 
     dotnet sln add Application/Application.csproj 
     dotnet sln add Domain/Domain.csproj 
@@ -45,6 +46,7 @@ Crear base de datos
     dotnet tool install --local dotnet-ef
 
 Crear Migration y aplicar migration
+
     cd AccessData
     dotnet ef migrations add EspecialidadesModel -s ../API/
     dotnet ef database update -s ../API/
