@@ -2,15 +2,17 @@
 using AccessData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace AccessData.Migrations
 {
     [DbContext(typeof(APIDbContext))]
-    partial class APIDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200512035126_EspecialidadCodeUnique")]
+    partial class EspecialidadCodeUnique
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,7 +47,6 @@ namespace AccessData.Migrations
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("Apellido")
-                        .IsRequired()
                         .HasColumnType("character varying(64)")
                         .HasMaxLength(64);
 
@@ -60,7 +61,6 @@ namespace AccessData.Migrations
                         .HasColumnType("character varying(8)");
 
                     b.Property<string>("Nombre")
-                        .IsRequired()
                         .HasColumnType("character varying(64)")
                         .HasMaxLength(64);
 

@@ -6,11 +6,16 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using AccessData;
+using AccessData.Commands;
+using Domain.Commands;
+using Domain.Queries;
+using AccessData.Queries;
+using Application.Services;
+using System.Data;
+using SqlKata.Compilers;
 
 
 namespace API {
-
-
 
     public class Startup {
         public Startup(IConfiguration configuration) {
@@ -29,12 +34,16 @@ namespace API {
             services.AddDbContext<APIDbContext>(options => options.UseNpgsql(connectionString));
 
             // SQLKATA
-            // services.AddTransient<Compiler, PostgresCompiler>();
-            // services.AddTransient<IDbConnection>(b => {
-            //     return new  Npgsql.NpgsqlConnection(connectionString);
-            // });
-
-
+            services.AddTransient<Compiler, PostgresCompiler>();
+            services.AddTransient<IDbConnection>(b => {
+                return new Npgsql.NpgsqlConnection(connectionString);
+            });
+            
+            services.AddTransient<IGenericsRepository, GenericsRepository>();
+            services.AddTransient<IEspecialidadServices, EspecialidadServices>();
+            // services.AddTransient<IMedicoServices, MedicoServices>();
+            services.AddTransient<IEspecialidadQuery, EspecialidadQuery>();
+            // services.AddTransient<IMedicoQuery, MedicoQuery>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

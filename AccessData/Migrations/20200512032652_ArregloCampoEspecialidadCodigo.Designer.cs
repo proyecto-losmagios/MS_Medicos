@@ -2,15 +2,17 @@
 using AccessData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace AccessData.Migrations
 {
     [DbContext(typeof(APIDbContext))]
-    partial class APIDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200512032652_ArregloCampoEspecialidadCodigo")]
+    partial class ArregloCampoEspecialidadCodigo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -20,19 +22,20 @@ namespace AccessData.Migrations
 
             modelBuilder.Entity("Domain.Entities.Especialidad", b =>
                 {
+                    b.Property<int>("EspecialidadId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
                     b.Property<string>("Codigo")
                         .HasColumnType("character varying(8)")
                         .HasMaxLength(8);
 
-                    b.Property<int>("EspecialidadId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Nombre")
-                        .IsRequired()
                         .HasColumnType("character varying(128)")
                         .HasMaxLength(128);
 
-                    b.HasKey("Codigo");
+                    b.HasKey("EspecialidadId");
 
                     b.ToTable("Especialidades");
                 });
@@ -45,7 +48,6 @@ namespace AccessData.Migrations
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("Apellido")
-                        .IsRequired()
                         .HasColumnType("character varying(64)")
                         .HasMaxLength(64);
 
@@ -55,18 +57,13 @@ namespace AccessData.Migrations
                     b.Property<int>("EspecialidadId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("EspecialidadesCodigo")
-                        .IsRequired()
-                        .HasColumnType("character varying(8)");
-
                     b.Property<string>("Nombre")
-                        .IsRequired()
                         .HasColumnType("character varying(64)")
                         .HasMaxLength(64);
 
                     b.HasKey("MedicoId");
 
-                    b.HasIndex("EspecialidadesCodigo");
+                    b.HasIndex("EspecialidadId");
 
                     b.ToTable("Medicos");
                 });
@@ -75,7 +72,7 @@ namespace AccessData.Migrations
                 {
                     b.HasOne("Domain.Entities.Especialidad", "Especialidades")
                         .WithMany("Medicos")
-                        .HasForeignKey("EspecialidadesCodigo")
+                        .HasForeignKey("EspecialidadId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
