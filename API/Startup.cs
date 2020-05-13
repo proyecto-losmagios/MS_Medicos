@@ -41,9 +41,9 @@ namespace API {
             
             services.AddTransient<IGenericsRepository, GenericsRepository>();
             services.AddTransient<IEspecialidadServices, EspecialidadServices>();
-            // services.AddTransient<IMedicoServices, MedicoServices>();
+            services.AddTransient<IMedicoServices, MedicoServices>();
             services.AddTransient<IEspecialidadQuery, EspecialidadQuery>();
-            // services.AddTransient<IMedicoQuery, MedicoQuery>();
+            services.AddTransient<IMedicoQuery, MedicoQuery>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

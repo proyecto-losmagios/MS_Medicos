@@ -20,19 +20,25 @@ namespace AccessData.Migrations
 
             modelBuilder.Entity("Domain.Entities.Especialidad", b =>
                 {
+                    b.Property<int>("EspecialidadId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
                     b.Property<string>("Codigo")
+                        .IsRequired()
                         .HasColumnType("character varying(8)")
                         .HasMaxLength(8);
-
-                    b.Property<int>("EspecialidadId")
-                        .HasColumnType("integer");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("character varying(128)")
                         .HasMaxLength(128);
 
-                    b.HasKey("Codigo");
+                    b.HasKey("EspecialidadId");
+
+                    b.HasIndex("Codigo")
+                        .IsUnique();
 
                     b.ToTable("Especialidades");
                 });
@@ -55,10 +61,6 @@ namespace AccessData.Migrations
                     b.Property<int>("EspecialidadId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("EspecialidadesCodigo")
-                        .IsRequired()
-                        .HasColumnType("character varying(8)");
-
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("character varying(64)")
@@ -66,7 +68,7 @@ namespace AccessData.Migrations
 
                     b.HasKey("MedicoId");
 
-                    b.HasIndex("EspecialidadesCodigo");
+                    b.HasIndex("EspecialidadId");
 
                     b.ToTable("Medicos");
                 });
@@ -75,7 +77,7 @@ namespace AccessData.Migrations
                 {
                     b.HasOne("Domain.Entities.Especialidad", "Especialidades")
                         .WithMany("Medicos")
-                        .HasForeignKey("EspecialidadesCodigo")
+                        .HasForeignKey("EspecialidadId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

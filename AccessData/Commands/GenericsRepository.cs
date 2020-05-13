@@ -21,5 +21,9 @@ namespace AccessData.Commands {
         public IQueryable<T> GetAll<T>() where T : class {
             return _context.Set<T>();
         }
+
+        public T FindById<T>(int id) where T : class {
+            return _context.Set<T>().Find(id);
+        }
     }
 }
