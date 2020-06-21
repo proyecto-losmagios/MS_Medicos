@@ -1,5 +1,11 @@
 # Micro servicio de médicos
 
+Levantar servicio
+
+    dotnet run -p API
+
+URL: http://localhost:4300
+
 
 ## Comandos para creación del proyeto
 
